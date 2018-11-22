@@ -1,20 +1,20 @@
-package lexical;
+package lexer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static lexical.Utils.*;
+import static lexer.Utils.*;
 
-public class Lexical {
+public class Lexer {
     BufferedReader br = null;
     //行号和列号
     int rowNum = 1, colNum = 1;
     char ch;
 
     public static void main(String[] args) throws IOException {
-        Lexical lexical = new Lexical();
-        lexical.parse("test.c");
+        Lexer lexer = new Lexer();
+        lexer.parse("test.c");
     }
 
     public void parse(String filePath) throws IOException {
@@ -356,7 +356,30 @@ public class Lexical {
 
         ch = (char) br.read();
 
-        //--
+        // 负数
+        if (isNum(ch)) {
+            while (isNum(ch) || ch == '.') {
+                sb.append(ch);
+                ch = (char) br.read();
+                i++;
+            }
+
+            try {
+                int integer = Integer.parseInt(sb.toString());
+                printTuple(Category.CONSTANT, sb.toString(), rowNum, colNum);
+            } catch (Exception e) {
+                try {
+                    double d = Double.parseDouble(sb.toString());
+                    printTuple(Category.CONSTANT, sb.toString(), rowNum, colNum);
+                } catch (Exception exc) {
+                    printError(rowNum, colNum, "数字出现未知错误");
+                }
+            } finally {
+                colNum+= i;
+                return;
+            }
+        }
+        // --
         if (ch == '-') {
             sb.append(ch);
             ch = (char) br.read();
@@ -465,7 +488,6 @@ public class Lexical {
             //处理多行注释
             int i = 1;
 
-
             do {
                 ch = (char) br.read();
 
@@ -498,6 +520,10 @@ public class Lexical {
             ch = (char) br.read();
             rowNum++;
             colNum = 1;
+        } else {
+            //除法
+            printTuple(Category.OPERATOR, "/", rowNum, colNum);
+            colNum++;
         }
     }
 

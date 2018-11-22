@@ -1,0 +1,55 @@
+program -> statements
+statements -> statement statements
+statements -> $
+
+statement -> declare_stm ;
+statement -> assign_stm ;
+statement -> while_stm
+statement -> do_stm
+statement -> for_stm
+statement -> if_stm
+statement -> switch_stm
+
+expression -> arithmetic_exp
+expression -> logic_exp
+
+num -> INT
+num -> REAL
+
+arithmetic_exp -> arithmetic_item item_op
+item_op -> BIN_AR_OP_2 arithmetic_item
+item_op -> $
+arithmetic_item -> arithmetic_fac fac_op
+fac_op -> BIN_AR_OP_1 arithmetic_fac
+fac_op -> $
+arithmetic_fac -> num
+arithmetic_fac -> ID
+arithmetic_fac -> ( arithmetic_exp )
+
+logic_exp -> arithmetic_exp LOGIC_OP arithmetic_exp
+logic_exp -> 1
+logic_exp -> 0
+
+declare_stm -> TYPE declare_ass
+declare_ass -> declare_ass , declare_ass
+declare_ass -> ID ASS_OP expression
+declare_ass -> ID
+declare_ass -> ID [ INT ] = declare_arr
+declare_ass -> ID [ ] = declare_arr
+declare_arr -> { arr_item }
+declare_arr -> { arr_item , arr_item }
+arr_item -> { num }
+arr_item -> { CHAR }
+
+assign_stm -> ID ASS_OP expression
+assign_stm -> SELF_OP ID
+assign_stm -> ID SELF_OP
+assign_stm -> ID [ INT ] ASS_OP expression
+
+while_stm -> while ( logic_exp ) { statements }
+do_stm -> do { statements } while ( logic_exp ) ;
+for_stm -> for ( assign_stm ; logic_exp ; assign_stm ) { statements }
+if_stm -> if ( logic_exp ) { statements }
+if_stm -> if ( logic_exp ) { statements } else_stm
+else_stm -> else { statements }
+else_stm -> else if_stm
