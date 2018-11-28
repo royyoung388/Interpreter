@@ -102,6 +102,8 @@ public class Lexer {
         if (isKey(word)) {
 //            printTuple(Category.KEYWORD, word, rowNum, colNum);
             Token token = new Token(word, word, rowNum, colNum);
+            if (isType(word))
+                token.setCategory(Category.TYPE);
             token.print();
             tokens.add(token);
         } else if (word.equals("true") || word.equals("false")) {

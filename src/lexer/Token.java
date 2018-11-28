@@ -55,7 +55,7 @@ public class Token {
     }
 
     public void print() {
-//        System.out.printf("%d,%d: category: %s , symbol: %s\n", row, column, category, symbol);
+        System.out.printf("%d,%d: category: %s , symbol: %s\n", row, column, category, symbol);
     }
 
     public void testPrint() {

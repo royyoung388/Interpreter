@@ -363,6 +363,14 @@ public class AnalyseProduction {
         return select;
     }
 
+    public Set<String> getNonTerminal() {
+        return nonTerminal;
+    }
+
+    public Set<String> getTerminal() {
+        return terminal;
+    }
+
     public static void main(String[] args) {
 //        AnalyseProduction analyseProduction = new AnalyseProduction("testProduction.txt", "S");
         AnalyseProduction analyseProduction = new AnalyseProduction("program");

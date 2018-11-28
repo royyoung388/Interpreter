@@ -7,6 +7,7 @@ class Utils {
             "double", "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register",
             "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union",
             "unsigned", "void", "volatile", "while"};
+    private static String[] types = {"double", "enum", "float", "int", "long", "short", "struct", "union"};
 
     //运算符集合
     //用于判断运算符后面接运算符的非法情况
@@ -73,6 +74,7 @@ class Utils {
 
     /**
      * 是否为整数
+     *
      * @param num
      * @return
      */
@@ -82,5 +84,17 @@ class Utils {
         return false;
     }
 
-
+    /**
+     * 判断是不是一个数据类型的关键字
+     *
+     * @param type
+     * @return
+     */
+    static boolean isType(String type) {
+        for (String t : types) {
+            if (type.equals(t))
+                return true;
+        }
+        return false;
+    }
 }
