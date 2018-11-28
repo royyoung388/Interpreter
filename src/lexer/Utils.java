@@ -12,22 +12,6 @@ class Utils {
     //用于判断运算符后面接运算符的非法情况
     private static char[] operators = {'+', '-', '*', '/', '=', '>', '<', '!', '%'};
 
-    enum Category {
-        //关键字，   标识符，         常量，        运算符，       分隔符
-        KEYWORD(1), IDENTIFIER(2), CONSTANT(3), OPERATOR(4), DELIMITERS(5);
-
-        private final int value;
-
-        //构造器默认也只能是private, 从而保证构造函数只能在内部使用
-        Category(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     static boolean isAlpha(char ch) {
         return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
     }
@@ -70,14 +54,11 @@ class Utils {
     }
 
     /**
-     * 判断一个数是否符合整数或者浮点数的形式
+     * 判断一个数是否符合浮点数的形式
      *
      * @return
      */
-    static boolean isCorrectNum(String num) {
-        //没有小数点
-        if (Pattern.matches("[0-9]+", num))
-            return true;
+    static boolean isReal(String num) {
         //小数点在中间
         if (Pattern.matches("[0-9]+\\.[0-9]+", num))
             return true;
@@ -90,11 +71,16 @@ class Utils {
         return false;
     }
 
-    static void printTuple(Category category, String word, int row, int col) {
-        System.out.printf("%d,%d: category: %d , symbol: %s\n", row, col, category.getValue(), word);
+    /**
+     * 是否为整数
+     * @param num
+     * @return
+     */
+    static boolean isInt(String num) {
+        if (Pattern.matches("[0-9]+", num))
+            return true;
+        return false;
     }
 
-    static void printError(int row, int col, String msg) {
-        System.out.printf("%d,%d : ERROR: %s\n", row, col, msg);
-    }
+
 }

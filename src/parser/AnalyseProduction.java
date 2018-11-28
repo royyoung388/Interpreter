@@ -12,10 +12,11 @@ public class AnalyseProduction {
 
     private List<Production> productions = new ArrayList<>();
     private Set<String> nonTerminal = new HashSet<>(), terminal = new HashSet<>(), nullNonter = new HashSet<>();
-    private Map<String, Set<String>> first = new HashMap<>(), follow = new HashMap<>(), select = new HashMap<>();
+    private Map<String, Set<String>> first = new HashMap<>(), follow = new HashMap<>();
+    private Map<Production, Set<String>> select = new HashMap<>();
 
     public AnalyseProduction(String start) {
-        this("Production.txt", start);
+        this("production.txt", start);
     }
 
     public AnalyseProduction(String filePath, String start) {
@@ -33,8 +34,10 @@ public class AnalyseProduction {
             String line = br.readLine();
 
             while (line != null) {
-                if (line.length() == 0)
+                if (line.length() == 0) {
+                    line = br.readLine();
                     continue;
+                }
 
                 productions.add(new Production(line));
 
@@ -45,9 +48,11 @@ public class AnalyseProduction {
             }
 
             System.out.println("nonTerminal = " + nonTerminal);
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("read production error = " + e);
+            System.out.println();
         }
     }
 
@@ -63,6 +68,7 @@ public class AnalyseProduction {
         }
 
         System.out.println("terminal = " + terminal);
+        System.out.println();
     }
 
     /**
@@ -110,6 +116,7 @@ public class AnalyseProduction {
         //如果非终结符不在以上两个集合中，则为空
 
         System.out.println("nullNonter = " + nullNonter);
+        System.out.println();
     }
 
 
@@ -226,6 +233,7 @@ public class AnalyseProduction {
         }
 
         System.out.println("first = " + first);
+        System.out.println();
     }
 
     /**
@@ -287,6 +295,7 @@ public class AnalyseProduction {
         }
 
         System.out.println("follow = " + follow);
+        System.out.println();
     }
 
     /**
@@ -299,21 +308,27 @@ public class AnalyseProduction {
                 Set<String> result = new HashSet<>(first.get(production.getRight()));
                 result.remove("$");
                 result.addAll(follow.get(production.getLeft()));
-                select.put(production.getProduction(), result);
+                select.put(production, result);
             } else {
                 //没有空串
-                select.put(production.getProduction(), first.get(production.getRights()[0]));
+                select.put(production, first.get(production.getRights()[0]));
             }
         }
 
-        System.out.println("select = " + select);
+        System.out.println("select:");
+
+        for (Map.Entry<Production, Set<String>> entry : select.entrySet()) {
+            System.out.print(entry.getKey().getProduction() + " = ");
+            System.out.println(entry.getValue());
+        }
+        System.out.println();
     }
 
     /**
      * 判断是否为LL1文法
      */
     private void testLL1() {
-        Map<String, List<String>> map = new HashMap<>();
+        Map<String, List<Production>> map = new HashMap<>();
 
         //先将非终结符加入
         for (String n : nonTerminal) {
@@ -322,12 +337,12 @@ public class AnalyseProduction {
 
         //加入产生式
         for (Production production : productions) {
-            map.get(production.getLeft()).add(production.getProduction());
+            map.get(production.getLeft()).add(production);
         }
 
         //对每一个非终结符，计算其select的交集
         for (String n : nonTerminal) {
-            List<String> list = map.get(n);
+            List<Production> list = map.get(n);
             int size = list.size();
 
             //两两之间求交集
@@ -337,15 +352,20 @@ public class AnalyseProduction {
                     result.retainAll(select.get(list.get(j)));
 
                     if (result.size() > 0) {
-                        System.out.println(list.get(i) + " /\\ " + list.get(j) + " = " + result);
+                        System.out.println(list.get(i).getProduction() + " /\\ " + list.get(j).getProduction() + " = " + result);
                     }
                 }
             }
         }
     }
 
+    public Map<Production, Set<String>> getSelect() {
+        return select;
+    }
+
     public static void main(String[] args) {
-        AnalyseProduction analyseProduction = new AnalyseProduction("testProduction.txt", "S");
+//        AnalyseProduction analyseProduction = new AnalyseProduction("testProduction.txt", "S");
+        AnalyseProduction analyseProduction = new AnalyseProduction("program");
         analyseProduction.testLL1();
     }
 }
