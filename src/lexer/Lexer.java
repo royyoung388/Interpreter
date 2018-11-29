@@ -586,12 +586,11 @@ public class Lexer {
             switch (sb.toString()) {
                 case "*=":
                 case "%=":
-                case "==":
                     token = new Token(Category.ASS_OP, sb.toString(), rowNum, colNum);
                     break;
+                case "==":
                 case "!=":
                     token = new Token(Category.RELATION_OP, sb.toString(), rowNum, colNum);
-
                     break;
             }
         }

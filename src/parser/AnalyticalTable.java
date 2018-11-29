@@ -13,6 +13,8 @@ import java.util.*;
 public class AnalyticalTable {
 
     private Map<Production, Set<String>> select;
+    private AnalyseProduction analyseProduction;
+
     //预测分析表
     private Map<String, Map<String, Production>> predictTable = new HashMap<>();
     //分析栈
@@ -34,7 +36,7 @@ public class AnalyticalTable {
 
     //创建预测分析表
     private void initTable(String filePath, String start) {
-        AnalyseProduction analyseProduction = new AnalyseProduction(filePath, start);
+        analyseProduction = new AnalyseProduction(filePath, start);
 
         //创建非终结符表头
         for (String non : analyseProduction.getNonTerminal()) {
@@ -60,22 +62,56 @@ public class AnalyticalTable {
         int index = 0;
         String pre = tokens.get(index).getCategory();
 
-        while (pre != null || !analyze.isEmpty()) {
-            System.out.println(analyze);
-            String ana = analyze.pop();
+        while (!analyze.isEmpty()) {
+            System.out.println(pre + " " + analyze);
+            String top = analyze.pop();
+//
+//            if (pre.equals("#")) {
+//                System.out.println("语法错误");
+//                break;
+//            }
 
-            if (ana.equals(pre)) {
-                System.out.println(pre + " 匹配");
+            if (top.equals(pre)) {
+                System.out.printf("%s %s 匹配\n", pre, tokens.get(index).getSymbol());
                 index++;
-                pre = index >= tokens.size() ? null : tokens.get(index).getCategory();
+                pre = index >= tokens.size() ? "#" : tokens.get(index).getCategory();
                 continue;
             }
 
-            Production production = predictTable.get(ana).get(pre);
+            //如果栈顶是非终结符，那么直接报错并退出
+            if (analyseProduction.getTerminal().contains(top)) {
+                System.out.println("语法错误");
+                return;
+            }
 
+            Production production = predictTable.get(top).get(pre);
+
+            //应急恢复
             if (production == null) {
-                //todo 启动应急恢复
-                System.out.println("应急恢复");
+                //栈顶是非终结符号，开始尝试恢复
+                while (!analyze.isEmpty()) {
+                    if (pre.equals("#")) {
+                        System.out.println("语法错误");
+                        return;
+                    }
+
+                    System.out.println("跳过符号 ： " + pre);
+                    index++;
+                    pre = index >= tokens.size() ? "#" : tokens.get(index).getCategory();
+
+                    //是当前非终结符的follow集合，则非终结符出栈
+                    if (analyseProduction.getFollow().get(top).contains(pre)) {
+                        System.out.println("应急恢复：非终结符出栈 " + top);
+                        break;
+                    }
+
+                    //是当前非终结符的first集合，则非终结符恢复分析
+                    if (analyseProduction.getFirst().get(top).contains(pre)) {
+                        System.out.println("应急恢复：非终结符恢复分析");
+                        analyze.push(top);
+                        break;
+                    }
+                }
                 continue;
             } else {
                 System.out.println(production.getProduction());
@@ -87,6 +123,8 @@ public class AnalyticalTable {
                     analyze.push(rights[i]);
             }
         }
+
+        System.out.println("接受");
     }
 
     public static void main(String[] args) throws IOException {
@@ -94,7 +132,7 @@ public class AnalyticalTable {
 //        ArrayList<Token> tokens = lexer.parse("test.c");
         ArrayList<Token> tokens = lexer.parse("testAnalyse.c");
 
-//        AnalyticalTable at = new AnalyticalTable("tesstProduction.txt", "E");
+//        AnalyticalTable at = new AnalyticalTable("testProduction.txt", "E");
         AnalyticalTable at = new AnalyticalTable("program");
         at.analyze(tokens);
     }

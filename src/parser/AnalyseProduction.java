@@ -348,7 +348,7 @@ public class AnalyseProduction {
             //两两之间求交集
             for (int i = 0; i < size - 1; i++) {
                 for (int j = i + 1; j < size; j++) {
-                    Set<String> result = select.get(list.get(i));
+                    Set<String> result = new HashSet<>(select.get(list.get(i)));
                     result.retainAll(select.get(list.get(j)));
 
                     if (result.size() > 0) {
@@ -363,6 +363,14 @@ public class AnalyseProduction {
         return select;
     }
 
+    public Map<String, Set<String>> getFirst() {
+        return first;
+    }
+
+    public Map<String, Set<String>> getFollow() {
+        return follow;
+    }
+
     public Set<String> getNonTerminal() {
         return nonTerminal;
     }
@@ -372,7 +380,7 @@ public class AnalyseProduction {
     }
 
     public static void main(String[] args) {
-//        AnalyseProduction analyseProduction = new AnalyseProduction("testProduction.txt", "S");
+//        AnalyseProduction analyseProduction = new AnalyseProduction("testProduction.txt", "program");
         AnalyseProduction analyseProduction = new AnalyseProduction("program");
         analyseProduction.testLL1();
     }
