@@ -3,14 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4653058a-14ce-4163-aeb8-9b46ff11ef2b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production.txt" beforeDir="false" afterPath="$PROJECT_DIR$/production.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/AnalyseProduction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/AnalyseProduction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/AnalyticalTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/AnalyticalTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tesstProduction.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testAnalyse.c" beforeDir="false" afterPath="$PROJECT_DIR$/testAnalyse.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testProduction.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testProduction.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/解释器.docx" beforeDir="false" afterPath="$PROJECT_DIR$/解释器.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reference.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/AnalyticalTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/AnalyseTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/Parser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser/Utils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testProduction.txt" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,38 +24,7 @@
     </SUITE>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/production.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="54" column="7" selection-start-line="54" selection-end-line="54" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/testAnalyse.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/parser/AnalyticalTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="74" column="48" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -93,10 +61,10 @@
       <find>ASS_OP</find>
       <find>switch</find>
       <find>logic_exp</find>
-      <find>logic_exp -&gt; arithmetic_exp RELATION_OP arithmetic_exp</find>
       <find>arithmetic_fac</find>
       <find>=</find>
       <find>for_stm</find>
+      <find>logic_exp -&gt; arithmetic_exp RELATION_OP arithmetic_exp</find>
     </findStrings>
     <replaceStrings>
       <replace>append(ch)</replace>
@@ -123,7 +91,6 @@
         <option value="$PROJECT_DIR$/src/lexical/Lexical.java" />
         <option value="$PROJECT_DIR$/src/lexical/Token.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/Lexer/Lexer.java" />
         <option value="$PROJECT_DIR$/src/Parser/Production.java" />
         <option value="$PROJECT_DIR$/src/parser/Parser.java" />
@@ -132,7 +99,6 @@
         <option value="$PROJECT_DIR$/testProduction.txt" />
         <option value="$PROJECT_DIR$/reference.txt" />
         <option value="$PROJECT_DIR$/test.c" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/testAnalyse.txt" />
         <option value="$PROJECT_DIR$/src/lexer/Utils.java" />
         <option value="$PROJECT_DIR$/src/lexer/Token.java" />
@@ -142,6 +108,8 @@
         <option value="$PROJECT_DIR$/src/parser/AnalyticalTable.java" />
         <option value="$PROJECT_DIR$/production.txt" />
         <option value="$PROJECT_DIR$/testAnalyse.c" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -206,7 +174,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543504012801" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543504712718" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -232,7 +200,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.AnalyticalTable">
+  <component name="RunManager" selected="Application.AnalyseTable">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -253,8 +221,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AnalyticalTable" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="parser.AnalyticalTable" />
+    <configuration name="AnalyseTable" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="parser.AnalyseTable" />
       <module name="Interpreter" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -313,11 +281,11 @@
     <list>
       <item itemvalue="Application.AnalyseProduction" />
       <item itemvalue="Application.Lexer" />
-      <item itemvalue="Application.AnalyticalTable" />
+      <item itemvalue="Application.AnalyseTable" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AnalyticalTable" />
+        <item itemvalue="Application.AnalyseTable" />
         <item itemvalue="Application.AnalyseProduction" />
         <item itemvalue="Application.Lexer" />
       </list>
@@ -347,22 +315,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1864" height="1098" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.22569832" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.23240224" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.3279743" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32762313" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.32976446" />
       <window_info anchor="bottom" id="Version Control" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="3" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.32901832" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" visible="true" weight="0.33333334" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.39805827" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32869378" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.33297643" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.39764202" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.32869378" />
@@ -407,13 +374,13 @@
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/parser/AnalyticalTable.java</url>
+          <url>file://$PROJECT_DIR$/src/parser/AnalyseTable.java</url>
           <line>64</line>
           <properties />
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/parser/AnalyticalTable.java</url>
+          <url>file://$PROJECT_DIR$/src/parser/AnalyseTable.java</url>
           <line>86</line>
           <properties />
           <option name="timeStamp" value="54" />
@@ -478,9 +445,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Interpreter.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="jar://E:/jdk1.8.0_131/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
@@ -496,13 +460,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lexical/Token.java" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/jdk1.8.0_131/src.zip!/java/io/FileInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -525,13 +482,6 @@
             <element signature="e#13541#13542#0" expanded="true" />
             <element signature="e#13596#13597#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -584,13 +534,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testProduction.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/jdk1.8.0_131/src.zip!/java/util/Stack.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-115">
@@ -598,24 +541,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/jdk1.8.0_131/src.zip!/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
           <caret line="211" column="6" selection-start-line="211" selection-start-column="6" selection-end-line="211" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -644,13 +573,6 @@
             <element signature="e#555#556#0" expanded="true" />
             <element signature="e#588#589#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reference.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -696,24 +618,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/jdk1.8.0_131/src.zip!/java/util/Set.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="319" column="12" selection-start-line="319" selection-start-column="12" selection-end-line="319" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testProduction.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -734,19 +642,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/AnalyticalTable.java">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="74" column="48" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="48" />
+        <state relative-caret-position="299">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/AnalyseTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="130" selection-start-line="130" selection-end-line="136" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/production.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
+        <state relative-caret-position="645">
           <caret line="54" column="7" selection-start-line="54" selection-end-line="54" selection-end-column="7" />
         </state>
       </provider>
@@ -754,7 +683,50 @@
     <entry file="file://$PROJECT_DIR$/testAnalyse.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
-          <caret line="14" column="32" lean-forward="true" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testProduction.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state>
+          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="92">
+            <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reference.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Interpreter.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="63" lean-forward="true" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
         </state>
       </provider>
     </entry>

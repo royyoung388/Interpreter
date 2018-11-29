@@ -10,7 +10,7 @@ import java.util.*;
  * 预测分析表
  * 执行整个预测过程
  */
-public class AnalyticalTable {
+public class AnalyseTable {
 
     private Map<Production, Set<String>> select;
     private AnalyseProduction analyseProduction;
@@ -22,11 +22,11 @@ public class AnalyticalTable {
     //输入串
     private List<Token> tokens;
 
-    public AnalyticalTable(String start) {
+    public AnalyseTable(String start) {
         this("production.txt", start);
     }
 
-    public AnalyticalTable(String filePath, String start) {
+    public AnalyseTable(String filePath, String start) {
         analyze = new Stack<>();
         analyze.push(start);
 
@@ -132,8 +132,8 @@ public class AnalyticalTable {
 //        ArrayList<Token> tokens = lexer.parse("test.c");
         ArrayList<Token> tokens = lexer.parse("testAnalyse.c");
 
-//        AnalyticalTable at = new AnalyticalTable("testProduction.txt", "E");
-        AnalyticalTable at = new AnalyticalTable("program");
+//        AnalyseTable at = new AnalyseTable("testProduction.txt", "E");
+        AnalyseTable at = new AnalyseTable("program");
         at.analyze(tokens);
     }
 }
