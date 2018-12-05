@@ -52,7 +52,7 @@ assign_item -> [ INT ] ASS_OP arithmetic_exp
 
 while_stm -> while ( logic_exp ) { statements }
 do_stm -> do { statements } while ( logic_exp ) ;
-for_stm -> for ( assign_stm ; logic_exp ; assign_stm ) { statements }
+for_stm -> for ( declare_stm ; logic_exp ; assign_stm ) { statements }
 if_stm -> if ( logic_exp ) { statements } else_stm
 else_stm -> $
 else_stm -> else else_if

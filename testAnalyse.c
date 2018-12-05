@@ -9,11 +9,11 @@ if (1) {
 }
 
 
-a++;
 
+a++
 int b = a + c;
 double b = a + (b *c) - (b / 3);
 
-int a[2] = {1,2};
+int a[2] = {1,2}
 
 for (int i = 0; i < 4; i++) {}

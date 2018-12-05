@@ -61,6 +61,7 @@ public class AnalyseTable {
     public void analyze(List<Token> tokens) {
         int index = 0;
         String pre = tokens.get(index).getCategory();
+        ArrayList<String> errors = new ArrayList<>();
 
         while (!analyze.isEmpty()) {
             System.out.println(pre + " " + analyze);
@@ -78,20 +79,29 @@ public class AnalyseTable {
                 continue;
             }
 
-            //如果栈顶是非终结符，那么直接报错并退出
+            //如果栈顶是非终结符，那么直接报错
             if (analyseProduction.getTerminal().contains(top)) {
-                System.out.println("语法错误");
-                return;
+                Token token = tokens.get(index);
+                String error = String.format("语法错误(%d,%d): 此处应该是 %s ， 但实际是 %s", token.getRow(), token.getColumn(), top, pre);
+                errors.add(error);
+                System.out.println(error);
+                //尝试跳过这个错误，分析后面的语法
+                continue;
             }
 
             Production production = predictTable.get(top).get(pre);
 
-            //应急恢复
+            //应急恢复，栈顶是非终结符号，开始尝试恢复
             if (production == null) {
-                //栈顶是非终结符号，开始尝试恢复
+                //先报错
+                Token token = tokens.get(index);
+                String error = String.format("语法错误(%d,%d): 不符合语法规则", token.getRow(), token.getColumn());
+                errors.add(error);
+                System.out.println(error);
+
                 while (!analyze.isEmpty()) {
                     if (pre.equals("#")) {
-                        System.out.println("语法错误");
+                        System.out.println("应急恢复结束");
                         return;
                     }
 
@@ -122,6 +132,16 @@ public class AnalyseTable {
                 if (!rights[i].equals("$"))
                     analyze.push(rights[i]);
             }
+        }
+
+        //集中报错
+        if (errors.size() > 0) {
+            System.out.println("\n发现以下错误：\n");
+
+            for (String error : errors) {
+                System.out.println(error);
+            }
+            return;
         }
 
         System.out.println("接受");
