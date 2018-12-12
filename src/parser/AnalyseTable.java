@@ -14,13 +14,14 @@ public class AnalyseTable {
 
     private Map<Production, Set<String>> select;
     private AnalyseProduction analyseProduction;
-
+    //语法树头结点,和当前结点
+    private TreeNode header, curr;
     //预测分析表
     private Map<String, Map<String, Production>> predictTable = new HashMap<>();
     //分析栈
     private Stack<String> analyze;
-    //输入串
-    private List<Token> tokens;
+    //当前语法没有错误
+    private boolean correct = true;
 
     public AnalyseTable(String start) {
         this("production.txt", start);
@@ -29,7 +30,10 @@ public class AnalyseTable {
     public AnalyseTable(String filePath, String start) {
         analyze = new Stack<>();
         analyze.push(start);
-
+        //语法树根节点
+        header = new TreeNode(null, "");
+        header.next = new TreeNode[]{new TreeNode(header, start)};
+        curr = header.next[0];
 
         initTable(filePath, start);
     }
@@ -66,14 +70,13 @@ public class AnalyseTable {
         while (!analyze.isEmpty()) {
             System.out.println(pre + " " + analyze);
             String top = analyze.pop();
-//
-//            if (pre.equals("#")) {
-//                System.out.println("语法错误");
-//                break;
-//            }
 
             if (top.equals(pre)) {
                 System.out.printf("%s %s 匹配\n", pre, tokens.get(index).getSymbol());
+                //语法树叶子结点
+                curr.next = new TreeNode[]{new TreeNode(curr, tokens.get(index))};
+                curr = curr.pre.findNext(curr);
+
                 index++;
                 pre = index >= tokens.size() ? "#" : tokens.get(index).getCategory();
                 continue;
@@ -85,6 +88,8 @@ public class AnalyseTable {
                 String error = String.format("语法错误(%d,%d): 此处应该是 %s ， 但实际是 %s", token.getRow(), token.getColumn(), top, pre);
                 errors.add(error);
                 System.out.println(error);
+                correct = false;
+
                 //尝试跳过这个错误，分析后面的语法
                 continue;
             }
@@ -98,6 +103,7 @@ public class AnalyseTable {
                 String error = String.format("语法错误(%d,%d): 不符合语法规则", token.getRow(), token.getColumn());
                 errors.add(error);
                 System.out.println(error);
+                correct = false;
 
                 while (!analyze.isEmpty()) {
                     if (pre.equals("#")) {
@@ -127,16 +133,29 @@ public class AnalyseTable {
                 System.out.println(production.getProduction());
             }
 
+            //将产生式右部反序入到分析栈和语法树中
             String[] rights = production.getRights();
-            for (int i = rights.length - 1; i >= 0; i--) {
-                if (!rights[i].equals("$"))
+            curr.next = new TreeNode[rights.length];
+
+            //空产生式不入栈
+            if (rights[0].equals("$")) {
+                curr.next = new TreeNode[]{new TreeNode(curr, "$")};
+                curr = curr.pre.findNext(curr);
+            } else {
+                for (int i = rights.length - 1; i >= 0; i--) {
                     analyze.push(rights[i]);
+                    //语法树
+                    curr.next[i] = new TreeNode(curr, rights[i]);
+                }
+                //移动当前语法树结点
+                curr = curr.next[0];
             }
         }
 
         //集中报错
         if (errors.size() > 0) {
             System.out.println("\n发现以下错误：\n");
+            correct = false;
 
             for (String error : errors) {
                 System.out.println(error);
@@ -147,6 +166,41 @@ public class AnalyseTable {
         System.out.println("接受");
     }
 
+    private void printSyntaxTree() {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(header);
+
+        while (!queue.isEmpty()) {
+            TreeNode temp = queue.peek();
+
+            for (int i = 0; i < temp.next.length; i++) {
+                if (temp.next[i].cate != null) {
+                    System.out.print(temp.next[i].cate + "  ");
+
+                    if (!temp.next[i].cate.equals("$")) {
+                        queue.offer(temp.next[i]);
+                    }
+
+                } else {
+                    System.out.print(temp.next[i].token.getCategory() + "  ");
+                }
+            }
+            System.out.println();
+
+            queue.poll();
+        }
+    }
+
+    //返回语法树根节点
+    public TreeNode getHeader() {
+        return header;
+    }
+
+    //当前语法分析是否正确
+    public boolean isCorrect() {
+        return correct;
+    }
+
     public static void main(String[] args) throws IOException {
         Lexer lexer = new Lexer();
 //        ArrayList<Token> tokens = lexer.parse("test.c");
@@ -155,5 +209,9 @@ public class AnalyseTable {
 //        AnalyseTable at = new AnalyseTable("testProduction.txt", "E");
         AnalyseTable at = new AnalyseTable("program");
         at.analyze(tokens);
+
+        if (at.isCorrect()) {
+            //at.printSyntaxTree();
+        }
     }
 }

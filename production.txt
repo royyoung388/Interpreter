@@ -1,7 +1,16 @@
-program -> statements
+program -> func funcs
+funcs -> $
+funcs -> func funcs
+func -> TYPE ID ( args ) func_body
+args -> TYPE ID arg
+args -> $
+arg -> , TYPE ID arg
+arg -> $
+func_body -> ;
+func_body -> { statements }
+
 statements -> statement statements
 statements -> $
-
 statement -> break ;
 statement -> return ;
 statement -> declare_stm ;
