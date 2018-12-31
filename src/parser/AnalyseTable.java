@@ -74,8 +74,9 @@ public class AnalyseTable {
             if (top.equals(pre)) {
                 System.out.printf("%s %s 匹配\n", pre, tokens.get(index).getSymbol());
                 //语法树叶子结点
-                curr.next = new TreeNode[]{new TreeNode(curr, tokens.get(index))};
-                curr = curr.pre.findNext(curr);
+//                curr.next = new TreeNode[]{new TreeNode(curr, tokens.get(index))};
+                curr.token = tokens.get(index);
+                curr = curr.findNext();
 
                 index++;
                 pre = index >= tokens.size() ? "#" : tokens.get(index).getCategory();
@@ -140,7 +141,7 @@ public class AnalyseTable {
             //空产生式不入栈
             if (rights[0].equals("$")) {
                 curr.next = new TreeNode[]{new TreeNode(curr, "$")};
-                curr = curr.pre.findNext(curr);
+                curr = curr.findNext();
             } else {
                 for (int i = rights.length - 1; i >= 0; i--) {
                     analyze.push(rights[i]);
@@ -174,7 +175,7 @@ public class AnalyseTable {
             TreeNode temp = queue.peek();
 
             for (int i = 0; i < temp.next.length; i++) {
-                if (temp.next[i].cate != null) {
+                if (temp.next[i].token == null) {
                     System.out.print(temp.next[i].cate + "  ");
 
                     if (!temp.next[i].cate.equals("$")) {
@@ -211,7 +212,7 @@ public class AnalyseTable {
         at.analyze(tokens);
 
         if (at.isCorrect()) {
-            //at.printSyntaxTree();
+//            at.printSyntaxTree();
         }
     }
 }

@@ -6,11 +6,6 @@ public class Token {
     private String symbol;
     private int row, column;
 
-    public Token(Lexer.Category category, String symbol, int row, int column) {
-        this(category.getValue(), symbol, row, column);
-    }
-
-
     public Token(String category, String symbol, int row, int column) {
         this.category = category;
         this.symbol = symbol;
@@ -24,10 +19,6 @@ public class Token {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public void setCategory(Lexer.Category category) {
-        this.category = category.getValue();
     }
 
     public String getSymbol() {

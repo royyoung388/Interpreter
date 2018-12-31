@@ -15,46 +15,6 @@ public class Lexer {
     //所有的token
     private ArrayList<Token> tokens;
 
-    public enum Category {
-        /**
-         * 未被定义的符号直接以自身表示
-         * <p>
-         * DIGIT	数字
-         * LETTER	字母
-         * ID	标识符
-         * UN_AR_OP	一元算术运算符 -
-         * SELF_OP	自增自减运算符 ++ --
-         * UN_LOG_OP	一元逻辑运算符 !
-         * BIN_AR_OP_1	第一优先级二元算术运算符 * / %
-         * BIN_AR_OP_2	第二优先级二元算术运算符 + -
-         * LOGIC_OP	逻辑运算符 && || !
-         * RELATION_OP	关系运算符 > < >= <= == !=
-         * BIT_OP	位运算 >> <<
-         * ASS_OP	赋值运算符 = += -= *= /= %=
-         * INT	整数
-         * REAL	实数
-         * CHAR	字符
-         * STRING	字符串
-         * BOOL	布尔变量 true false
-         * TYPE	数据类型 int float double long short char
-         * DELIMITERS	多行注释 单行注释
-         */
-        DIGIT("DIGIT"), LETTER("LETTER"), ID("ID"), UN_AR_OP("UN_AR_OP"), SELF_OP("SELF_OP"),
-        UN_LOG_OP("UN_LOG_OP"), BIN_AR_OP_1("BIN_AR_OP_1"), BIN_AR_OP_2("BIN_AR_OP_2"), LOGIC_OP("LOGIC_OP"),
-        RELATION_OP("RELATION_OP"), BIT_OP("BIT_OP"), ASS_OP("ASS_OP"), INT("INT"), REAL("REAL"),
-        CHAR("CHAR"), STRING("STRING"), BOOL("BOOL"), TYPE("TYPE"), DELIMITERS("DELIMITERS");
-
-        private final String value;
-
-        //构造器默认也只能是private, 从而保证构造函数只能在内部使用
-        Category(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
 
     public Lexer() {
         tokens = new ArrayList<>();
@@ -106,6 +66,30 @@ public class Lexer {
                 token.setCategory(Category.TYPE);
             token.print();
             tokens.add(token);
+        } else if (word.equals("read")) {
+            sb.append(ch);
+            ch = (char) br.read();
+            sb.append(ch);
+            ch = (char) br.read();
+
+            if (sb.toString().equals("read()")) {
+                Token token = new Token(sb.toString(), sb.toString(), rowNum, colNum);
+                tokens.add(token);
+            } else {
+                printError(rowNum, colNum, "语法错误: " + sb.toString());
+            }
+        } else if (word.equals("write")) {
+            sb.append(ch);
+            ch = (char) br.read();
+            sb.append(ch);
+            ch = (char) br.read();
+
+            if (sb.toString().equals("write()")) {
+                Token token = new Token(sb.toString(), sb.toString(), rowNum, colNum);
+                tokens.add(token);
+            } else {
+                printError(rowNum, colNum, "语法错误: " + sb.toString());
+            }
         } else if (word.equals("true") || word.equals("false")) {
             //是布尔变量
 //            printTuple(Category.CONSTANT, word, rowNum, colNum);
@@ -156,6 +140,11 @@ public class Lexer {
 //            printTuple(Category.CONSTANT, word, rowNum, colNum);
             Token token = new Token(Category.INT, word, rowNum, colNum);
             token.print();
+
+            if (tokens.get(tokens.size() - 1).getSymbol().equals("/") && word.equals("0")) {
+                printError(rowNum, colNum, "被除数不能为0: ");
+            }
+
             tokens.add(token);
         } else if (isReal(word)) {
             Token token = new Token(Category.REAL, word, rowNum, colNum);
@@ -163,6 +152,7 @@ public class Lexer {
             tokens.add(token);
         } else
             printError(rowNum, colNum, "非法数字: " + sb.toString());
+
         colNum += i;
     }
 

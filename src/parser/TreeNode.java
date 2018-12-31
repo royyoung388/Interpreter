@@ -6,46 +6,87 @@ import lexer.Token;
  * 语法树结点
  */
 public class TreeNode {
-    String cate = null;
-    TreeNode[] next = null;
-    TreeNode pre = null;
+    public String cate = null;
+    public TreeNode[] next = null;
+    public TreeNode pre = null;
     //叶子结点会有一个token属性
-    Token token = null;
+    public Token token = null;
 
     public TreeNode(TreeNode pre, String cate) {
         this.pre = pre;
         this.cate = cate;
     }
 
-    public TreeNode(TreeNode pre, Token token) {
-        this.token = token;
-    }
-
     /**
-     * 寻找当前结点下，与参数结点相邻的下一个结点。如果没有相邻，则返回自身的相邻
+     * 寻找与当前结点相邻的下一个结点
+     * 如果没有相邻，则返回父节点的相邻结点
      *
-     * @param treeNode
      * @return
      */
-    public TreeNode findNext(TreeNode treeNode) {
+    public TreeNode findNext() {
         int index = 0;
+        //父节点
+        TreeNode parent = this.pre;
 
-        for (int i = 0; i < this.next.length; i++) {
-            if (this.next[i] == treeNode) {
+        for (int i = 0; i < parent.next.length; i++) {
+            if (parent.next[i] == this) {
                 index = i + 1;
                 break;
             }
         }
 
-        if (index >= this.next.length) {
-            //如果 this.pre 是根节点
-            if (this.pre.pre == null) {
-                return this.pre;
+        if (index >= parent.next.length) {
+            //如果 parent 是根节点
+            if (parent.pre == null) {
+                return parent;
             } else {
-                return this.pre.findNext(this);
+                return parent.findNext();
+            }
+        } else
+            return parent.next[index];
+    }
+
+    /**
+     * 寻找右兄弟结点，没有则为空
+     * @return
+     */
+    public TreeNode findRight() {
+        int index = 0;
+        //父节点
+        TreeNode parent = this.pre;
+
+        for (int i = 0; i < parent.next.length; i++) {
+            if (parent.next[i] == this) {
+                index = i + 1;
+                break;
             }
         }
-        else
-            return this.next[index];
+
+        if (index >= parent.next.length) {
+            return null;
+        } else
+            return parent.next[index];
+    }
+
+    /**
+     * 寻找左兄弟结点，没有则为空
+     * @return
+     */
+    public TreeNode findLeft() {
+        int index = 0;
+        //父节点
+        TreeNode parent = this.pre;
+
+        for (int i = 0; i < parent.next.length; i++) {
+            if (parent.next[i] == this) {
+                index = i - 1;
+                break;
+            }
+        }
+
+        if (index <= 0) {
+            return null;
+        } else
+            return parent.next[index];
     }
 }

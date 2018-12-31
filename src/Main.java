@@ -1,6 +1,7 @@
 import lexer.Lexer;
 import lexer.Token;
 import parser.AnalyseTable;
+import semantic.Semantic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,5 +15,8 @@ public class Main {
 //        AnalyseTable at = new AnalyseTable("testProduction.txt", "program");
         AnalyseTable at = new AnalyseTable("Production.txt", "program");
         at.analyze(tokens);
+
+        Semantic semantic = new Semantic(at.getHeader());
+        semantic.semantic();
     }
 }

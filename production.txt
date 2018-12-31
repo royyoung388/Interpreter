@@ -20,6 +20,8 @@ statement -> do_stm
 statement -> for_stm
 statement -> if_stm
 statement -> switch_stm
+statement -> read() ;
+statement -> write() ;
 
 value -> INT
 value -> REAL
@@ -27,13 +29,13 @@ value -> CHAR
 value -> STRING
 
 arithmetic_exp -> arithmetic_item item_op arithmetic_alt
-arithmetic_alt -> $
-arithmetic_alt -> BIN_AR_OP_2 arithmetic_item arithmetic_alt
-item_op -> BIN_AR_OP_1 arithmetic_item
-item_op -> $
 arithmetic_item -> ( arithmetic_exp )
 arithmetic_item -> ID
 arithmetic_item -> value
+item_op -> BIN_AR_OP_2 arithmetic_item
+item_op -> $
+arithmetic_alt -> $
+arithmetic_alt -> BIN_AR_OP_1 arithmetic_item item_op arithmetic_alt
 
 logic_exp -> arithmetic_exp logic_ari
 logic_ari -> $
@@ -45,7 +47,7 @@ logic_bool -> RELATION_OP logic_exp
 declare_stm -> TYPE declare_ass
 declare_ass -> ID declare_val declare_item
 declare_item -> $
-declare_item -> , declare_val declare_item
+declare_item -> , declare_ass declare_item
 declare_val -> $
 declare_val -> ASS_OP arithmetic_exp
 declare_val -> [ INT ] ASS_OP declare_arr
