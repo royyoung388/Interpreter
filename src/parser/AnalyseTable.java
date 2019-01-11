@@ -77,7 +77,6 @@ public class AnalyseTable {
 //                curr.next = new TreeNode[]{new TreeNode(curr, tokens.get(index))};
                 curr.token = tokens.get(index);
                 curr = curr.findNext();
-
                 index++;
                 pre = index >= tokens.size() ? "#" : tokens.get(index).getCategory();
                 continue;
@@ -169,26 +168,38 @@ public class AnalyseTable {
 
     private void printSyntaxTree() {
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(header);
+        queue.offer(header.next[0]);
 
         while (!queue.isEmpty()) {
-            TreeNode temp = queue.peek();
+            TreeNode node = queue.poll();
 
-            for (int i = 0; i < temp.next.length; i++) {
-                if (temp.next[i].token == null) {
-                    System.out.print(temp.next[i].cate + "  ");
+            if (node.cate.equals("new line")) {
+                System.out.println();
+                continue;
+            } else {
+                System.out.print(node.cate + " ");
+            }
 
-                    if (!temp.next[i].cate.equals("$")) {
-                        queue.offer(temp.next[i]);
+            boolean nl = false;
+            if (queue.isEmpty()) {
+                System.out.println();
+                nl = true;
+            } else if (queue.peek().cate.equals("new line")) {
+                nl = true;
+            }
+
+            if (node.token == null) {
+
+                for (int i = 0; i < node.next.length; i++) {
+                    if (!node.next[i].cate.equals("$")) {
+                        queue.offer(node.next[i]);
                     }
-
-                } else {
-                    System.out.print(temp.next[i].token.getCategory() + "  ");
                 }
             }
-            System.out.println();
 
-            queue.poll();
+            if (nl)
+                //换行的傀儡结点
+                queue.offer(new TreeNode(null, "new line"));
         }
     }
 
@@ -212,7 +223,7 @@ public class AnalyseTable {
         at.analyze(tokens);
 
         if (at.isCorrect()) {
-//            at.printSyntaxTree();
+            at.printSyntaxTree();
         }
     }
 }

@@ -34,7 +34,7 @@ public class AnalyseProduction {
             String line = br.readLine();
 
             while (line != null) {
-                if (line.length() == 0) {
+                if (line.length() == 0 || line.startsWith("//")) {
                     line = br.readLine();
                     continue;
                 }
@@ -340,6 +340,7 @@ public class AnalyseProduction {
             map.get(production.getLeft()).add(production);
         }
 
+        System.out.println("有交集的select集合:");
         //对每一个非终结符，计算其select的交集
         for (String n : nonTerminal) {
             List<Production> list = map.get(n);
@@ -357,6 +358,8 @@ public class AnalyseProduction {
                 }
             }
         }
+
+        System.out.println();
     }
 
     public Map<Production, Set<String>> getSelect() {

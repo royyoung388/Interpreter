@@ -1,4 +1,6 @@
-package semantic;
+package javacc;
+
+import semantic.Type;
 
 import java.util.Arrays;
 

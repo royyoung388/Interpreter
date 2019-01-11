@@ -1,4 +1,4 @@
-package lexer;
+package javacc;
 
 public class Category {
     /**
@@ -38,6 +38,6 @@ public class Category {
     public static final String CHAR = "CHAR";
     public static final String STRING = "STRING";
     public static final String BOOL = "BOOL";
-    public static final String TYPE = "TYPE";
+    public static final String VOID = "VOID";
     public static final String DELIMITERS = "DELIMITERS";
 }

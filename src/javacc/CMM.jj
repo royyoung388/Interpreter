@@ -1,0 +1,487 @@
+options {
+  LOOKAHEAD = 3;
+//  DEBUG_PARSER = true;
+//  DEBUG_LOOKAHEAD = true;
+//  DEBUG_TOKEN_MANAGER = true;
+//  FORCE_LA_CHECK = true;
+}
+
+PARSER_BEGIN(CMMParser)
+
+package cc;
+
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CMMParser
+{
+    static SymbolTable table = new SymbolTable();
+    public static void main(String args[]) throws ParseException {
+        try {
+            FileInputStream fileReader = new FileInputStream("testAnalyse.c");
+            CMMParser parser = new CMMParser(fileReader);
+            parser.procedure();
+        }catch (Exception e){
+            System.err.println(e);
+        }
+    }
+}
+
+PARSER_END(CMMParser)
+
+SKIP :
+{
+    " "
+    | "\t"
+    | "\n"
+    | "\r"
+    | < "//" (~[ "\n", "\r" ])*
+        (
+          "\n"
+        | "\r"
+        | "\r\n"
+        ) >
+    | < "/*" (~[ "*" ])* "*"
+        (
+          ~[ "/" ] (~[ "*" ])* "*"
+        )*
+        "/" >
+}
+
+TOKEN : /* KEYWORDS */
+{
+    <IF :"if">
+    | <ELSE :"else">
+    | <WHILE :"while">
+    | <DO : "do">
+    | <FOR :"for">
+    | <READ :"read">
+    | <WRITE :"write">
+    | <RETURN:"return">
+    | <BREAK : "break">
+    | <INT :"int">
+    | <REAL: ("float" | "double")>
+    | <VOID:"void">
+    | <CHAR:"char">
+    | <BOOL : "true" | "false">
+}
+
+TOKEN : /* LITERALS */
+{
+    //整数
+    <INTEGER_NUM:["1"-"9"](["0"-"9"])*>
+    //实数
+    | <REAL_NUM:(["0"-"9"])+
+    | (["0"-"9"])+"."
+    | (["0"-"9"])+"."(["0"-"9"])+
+    | "."(["0"-"9"])+>
+    | <CHAR_C: "\'" ~[ "\"" , "\n", "\\"] | "\\" ("\"" | "\n" | "\\" | "'\n\'")"\'">
+    //字符串
+    | <STRING : "\"" (~[ "\"" , "\n", "\\"] | (("\\" ("\"" | "\n" | "\\" | "'\n\'"))))* "\"">
+}
+
+TOKEN : /* OPERATORS */
+{
+    <SELF_OP : "++" | "--">
+    | <UN_LOG_OP : "!">
+    | <BIN_AR_OP_1 : "*" | "/" | "%">
+    | <BIN_AR_OP_2 : "+" | "-">
+    | <LOGIC_OP : "&&" | "||">
+    | <RELATION_OP : ">" | "<" | ">=" | "<=" | "==" | "!=">
+    | <BIT_OP : ">>" | "<<">
+    | <ASS_OP : "=" | "+=" | "-=" | "*=" | "/=" | "%=">
+}
+
+TOKEN : /* IDENTIFIER */
+{
+    <IDENTIFIER:["a"-"z","A"-"Z","_"](["a"-"z","A"-"Z","_","0"-"9"])*>
+}
+
+TOKEN :
+{
+    <SEMI:";">
+}
+
+void procedure(): {
+}
+{
+    (func())*
+}
+
+void func(): {
+}
+{
+    type() <IDENTIFIER> "(" (type() <IDENTIFIER> ("," type() <IDENTIFIER>)*)?  ")" "{" (statement())* "}"
+
+}
+
+String type(): {
+}
+{
+     <INT>{ return Type.INT; }
+     | <REAL> { return Type.DOUBLE; }
+     | <VOID> { return Type.VOID; }
+     | <CHAR> { return Type.CHAR; }
+     | <STRING> { return Category.STRING; }
+}
+
+void statement(): {
+}
+{
+    <BREAK> <SEMI>
+    | <RETURN> <SEMI>
+    | read_stm() <SEMI>
+    | write_stm() <SEMI>
+    | declare_stm() <SEMI>
+    | declare_arr_stm() <SEMI>
+    | assign_stm() <SEMI>
+    | while_stm()
+    | do_stm()
+    | for_stm()
+    | if_stm()
+}
+
+Value read_stm(): {
+    Value v = new Value();
+}
+{
+    <READ> "(" ")" {
+    Scanner in = new Scanner(System.in);
+    v.cate = Category.STRING;
+    v.value = in.nextLine();
+    return v;
+    }
+}
+
+void write_stm(): {
+    Token token = null;
+    Token index = null;
+    Value value = null;
+    Symbol symbol = null;
+}
+{
+    <WRITE> "(" (value=value() {
+                System.out.println(value.value);
+            }
+        | token=<IDENTIFIER> {
+                symbol = table.query(token.image);
+                System.out.println(symbol.getLength() < 0 ? symbol.getValueString() : symbol.getArray());
+            }
+        | token=<IDENTIFIER> "[" index=<INTEGER_NUM> "]" {
+                symbol = table.query(token.image);
+                if (symbol.getLength() < 0) {
+                    throw new ParseException(String.format("%d,%d: 标识符不是数组类型", token.beginLine, token.beginColumn));
+                } else {
+                    System.out.println(symbol.getArray(Integer.parseInt(index.image)));
+                }
+            }
+        ) ")"
+}
+
+Value value(): {
+    Token token = null;
+    Value value = new Value();
+}
+{
+    (token=<INTEGER_NUM> {value.cate = Category.INT;}
+    | token=<REAL_NUM> {value.cate = Category.REAL;}
+    | token=<CHAR_C> {value.cate = Category.CHAR;}
+    | token=<STRING> {value.cate = Category.STRING;}) {
+        value.value = token.image;
+        return value;
+    }
+}
+
+void declare_stm(): {
+    Token token = null;
+    Token tk = null;
+    Symbol symbol;
+    String type;
+    Value value = null;
+    int len;
+    ArrayList<Value> list = new ArrayList<Value>();
+    Value v;
+}
+{
+    type=type() token=<IDENTIFIER> (<ASS_OP> value=arithmetic_exp())?
+        {
+            if (table.query(token.image) != null) {
+                throw new ParseException(String.format("%d,%d: 重复定义的标识符", token.beginLine, token.beginColumn));
+            } else {
+                symbol = new Symbol(type, token.image);
+                if (value != null)
+                    symbol.setValue(value.value);
+                table.insert(symbol);
+            }
+        }
+    ("," token=<IDENTIFIER> (<ASS_OP> (value=arithmetic_exp()))?
+        {
+            if (table.query(token.image) != null) {
+                throw new ParseException(String.format("%d,%d: 重复定义的标识符", token.beginLine, token.beginColumn));
+            } else {
+                symbol = new Symbol(type, token.image);
+                if (value != null)
+                    symbol.setValue(value.value);
+                table.insert(symbol);
+            }
+        }
+    )*
+}
+
+void declare_arr_stm(): {
+    Token token = null;
+    Token tk = null;
+    Symbol symbol;
+    String type;
+    Value value = null;
+    int len;
+    ArrayList<Value> list = new ArrayList<Value>();
+    Value v;
+}
+{
+    type=type() token=<IDENTIFIER> "[" tk=<INTEGER_NUM> {len = Integer.parseInt(tk.image);} "]"
+        (<ASS_OP> "{" (v=value(){list.add(v);} ("," v=value() {list.add(v);})*)? "}")?
+        {
+            if (table.query(token.image) != null) {
+                throw new ParseException(String.format("%d,%d: 重复定义的标识符", token.beginLine, token.beginColumn));
+            } else {
+                symbol = new Symbol(type, token.image);
+                if (list.size() >= 0) {
+                    symbol.setLength(len);
+                    for (int i = 0; i < list.size(); i++)
+                        symbol.setArrayValue(i, list.get(i).value);
+                }
+                table.insert(symbol);
+            }
+        }
+    ("," token=<IDENTIFIER> "[" tk=<INTEGER_NUM> {len = Integer.parseInt(tk.image);} "]"
+        (<ASS_OP> "{" (v=value(){list.add(v);} ("," v=value() {list.add(v);})*)? "}")?
+        {
+            if (table.query(token.image) != null) {
+                throw new ParseException(String.format("%d,%d: 重复定义的标识符", token.beginLine, token.beginColumn));
+            } else {
+                symbol = new Symbol(type, token.image);
+                if (list.size() >= 0) {
+                    symbol.setLength(len);
+                    for (int i = 0; i < list.size(); i++)
+                        symbol.setArrayValue(i, list.get(i).value);
+                }
+                table.insert(symbol);
+            }
+        })*
+}
+
+void assign_stm(): {
+    Token token = null;
+    Token id = null;
+    Token index = null;
+    Symbol symbol;
+    Value v;
+}
+{
+	token=<SELF_OP> id=<IDENTIFIER> {
+        symbol = table.query(id.image);
+        if (symbol == null)
+            throw new ParseException(String.format("%d,%d: 未定义的标识符", id.beginLine, id.beginColumn));
+
+	    switch(token.image) {
+            case "++":
+                symbol.selfAdd();
+                break;
+            case "--":
+                symbol.selfMin();
+                break;
+	    }
+	}
+	| id=<IDENTIFIER> token=<SELF_OP>{
+        symbol = table.query(id.image);
+        if (symbol == null)
+            throw new ParseException(String.format("%d,%d: 未定义的标识符", id.beginLine, id.beginColumn));
+
+	    switch(token.image) {
+            case "++":
+                symbol.selfAdd();
+                break;
+            case "--":
+                symbol.selfMin();
+                break;
+	    }
+	}
+	| id=<IDENTIFIER> token=<ASS_OP> (v=arithmetic_exp() | v=read_stm()) {
+        symbol = table.query(id.image);
+        if (symbol == null)
+            throw new ParseException(String.format("%d,%d: 未定义的标识符", id.beginLine, id.beginColumn));
+
+        symbol.setValue(v.value);
+	}
+	| id=<IDENTIFIER> "[" index=<INTEGER_NUM> "]" token=<ASS_OP> (v=arithmetic_exp() | v=read_stm()) {
+        symbol = table.query(id.image);
+        if (symbol == null)
+            throw new ParseException(String.format("%d,%d: 未定义的标识符", id.beginLine, id.beginColumn));
+
+        symbol.setArrayValue(Integer.parseInt(index.image), v.value);
+	}
+}
+
+void while_stm(): {
+    boolean logic;
+}
+{
+    <WHILE> "(" logic=logic_exp() ")" "{" (statement())* "}" {
+
+    }
+}
+
+void do_stm(): {}
+{
+    <DO> "{" (statement())* "}" <WHILE> "(" logic_exp() ")"
+}
+
+void for_stm(): {}
+{
+    <FOR> "(" declare_stm() <SEMI> logic_exp() <SEMI> assign_stm() ")" "{" (statement())* "}"
+}
+
+void if_stm():{}
+{
+    <IF> "(" logic_exp() ")" "{" (statement())* "}" (<ELSE> (if_stm())? | "{" (statement())* "}")*
+}
+
+Value arithmetic_exp(): {
+    Value v1;
+    Value v2 = null;
+    Value v = new Value();
+    Token token = null;
+}{
+    v1=arithmetic_item() (token=<BIN_AR_OP_2> v2=arithmetic_item())*
+    {
+        if (v2 == null) {
+            return v1;
+        }
+        if (!Utils.cateConvert(v1.cate, v2.cate)) {
+            throw new ParseException(String.format("%d,%d: 类型不一致", token.beginLine, token.beginColumn));
+        } else {
+            v.cate = Utils.calcCate(v1.cate, v2.cate);
+            switch(token.image) {
+                case "+":
+                    v.value = Double.toString(Double.parseDouble(v1.value) + Double.parseDouble(v2.value));
+                    return v;
+                case "-":
+                    v.value = Double.toString(Double.parseDouble(v1.value) - Double.parseDouble(v2.value));
+                    return v;
+            }
+            return v1;
+        }
+    }
+}
+
+Value arithmetic_item():{
+    Value v1;
+    Value v2 = null;
+    Value v = new Value();
+    Token token = null;
+}
+{
+    v1=arithmetic_fac() (token=<BIN_AR_OP_1> v2=arithmetic_fac())*
+    {
+        if (v2 == null) {
+            return v1;
+        }
+        if (!Utils.cateConvert(v1.cate, v2.cate)) {
+            throw new ParseException(String.format("%d,%d: 类型不一致", token.beginLine, token.beginColumn));
+        } else {
+            v.cate = Utils.calcCate(v1.cate, v2.cate);
+            switch(token.image) {
+                case "*":
+                    v.value = Double.toString(Double.parseDouble(v1.value) * Double.parseDouble(v2.value));
+                    return v;
+                case "/":
+                    v.value = Double.toString(Double.parseDouble(v1.value) / Double.parseDouble(v2.value));
+                    return v;
+                case "%":
+                    v.value = Double.toString(Double.parseDouble(v1.value) % Double.parseDouble(v2.value));
+                    return v;
+            }
+        }
+        return v1;
+    }
+}
+
+Value arithmetic_fac(): {
+    Token token = null;
+    Value value = null;
+}
+{
+    token=<IDENTIFIER> {
+            Symbol symbol = table.query(token.image);
+            if (symbol == null) {
+                throw new ParseException(String.format("%d,%d: 未定义的标识符", token.beginLine, token.beginColumn));
+            }
+            value = new Value();
+            value.cate = Utils.type2Cate(symbol.getType());
+            value.value = symbol.getValueString();
+            return value;
+        }
+    | value=value() {
+            return value;
+        }
+    | "(" value=arithmetic_exp() ")" {
+            return value;
+        }
+}
+
+boolean logic_exp(): {
+    boolean v1;
+    boolean v2 = false;
+    Token token = null;
+}
+{
+    v1=logic_item() (token=<LOGIC_OP> v2=logic_item())*
+    {
+        if (token == null)
+            return v1;
+
+        switch(token.image) {
+            case "&&":
+                return v1 && v2;
+            case "||":
+                return v1 || v2;
+        }
+        return false;
+    }
+}
+
+boolean logic_item():{
+    boolean v;
+    Token token = null;
+    Value v1;
+    Value v2 = null;
+}
+{
+    "(" v=logic_item() ")" {return v;}
+    | <UN_LOG_OP> v=logic_item() {return !v;}
+    | token=<BOOL> {if (token.image.equals("true")) return true; else return false;}
+    | v1=arithmetic_exp() (token=<RELATION_OP> v2=arithmetic_exp())* {
+            if (v2 == null) {
+                return Double.parseDouble(v1.value) > 0;
+            }
+
+            switch(token.image) {
+                case ">":
+                    return Double.parseDouble(v1.value) > Double.parseDouble(v2.value);
+                case "<":
+                    return Double.parseDouble(v1.value) < Double.parseDouble(v2.value);
+                case ">=":
+                    return Double.parseDouble(v1.value) >= Double.parseDouble(v2.value);
+                case "<=":
+                    return Double.parseDouble(v1.value) <= Double.parseDouble(v2.value);
+                case "==":
+                    return Double.parseDouble(v1.value) == Double.parseDouble(v2.value);
+                case "!=":
+                    return Double.parseDouble(v1.value) != Double.parseDouble(v2.value);
+            }
+
+            return false;
+        }
+}

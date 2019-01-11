@@ -1,6 +1,7 @@
-package semantic;
+package javacc;
 
 import lexer.Category;
+import semantic.Type;
 
 public class Utils {
     public static String calcCate(String cate1, String cate2) {

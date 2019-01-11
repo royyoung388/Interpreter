@@ -16,7 +16,7 @@ public class Main {
         AnalyseTable at = new AnalyseTable("Production.txt", "program");
         at.analyze(tokens);
 
-        Semantic semantic = new Semantic(at.getHeader());
-        semantic.semantic();
+        Semantic semantic = new Semantic();
+        semantic.run(at.getHeader());
     }
 }

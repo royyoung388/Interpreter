@@ -66,30 +66,6 @@ public class Lexer {
                 token.setCategory(Category.TYPE);
             token.print();
             tokens.add(token);
-        } else if (word.equals("read")) {
-            sb.append(ch);
-            ch = (char) br.read();
-            sb.append(ch);
-            ch = (char) br.read();
-
-            if (sb.toString().equals("read()")) {
-                Token token = new Token(sb.toString(), sb.toString(), rowNum, colNum);
-                tokens.add(token);
-            } else {
-                printError(rowNum, colNum, "语法错误: " + sb.toString());
-            }
-        } else if (word.equals("write")) {
-            sb.append(ch);
-            ch = (char) br.read();
-            sb.append(ch);
-            ch = (char) br.read();
-
-            if (sb.toString().equals("write()")) {
-                Token token = new Token(sb.toString(), sb.toString(), rowNum, colNum);
-                tokens.add(token);
-            } else {
-                printError(rowNum, colNum, "语法错误: " + sb.toString());
-            }
         } else if (word.equals("true") || word.equals("false")) {
             //是布尔变量
 //            printTuple(Category.CONSTANT, word, rowNum, colNum);
@@ -140,10 +116,6 @@ public class Lexer {
 //            printTuple(Category.CONSTANT, word, rowNum, colNum);
             Token token = new Token(Category.INT, word, rowNum, colNum);
             token.print();
-
-            if (tokens.get(tokens.size() - 1).getSymbol().equals("/") && word.equals("0")) {
-                printError(rowNum, colNum, "被除数不能为0: ");
-            }
 
             tokens.add(token);
         } else if (isReal(word)) {
@@ -248,8 +220,6 @@ public class Lexer {
                 if (isNum(ch)) {
                     handleDouble();
                 } else {
-//                    System.out.println("单界符");
-//                    printTuple(Category.DELIMITERS, "" + ch, rowNum, colNum);
                     token = new Token(ch + "", ch + "", rowNum, colNum);
                     token.print();
                     tokens.add(token);
@@ -280,40 +250,38 @@ public class Lexer {
             case '/':
                 handleDiv();
                 break;
-//            case '!':
-//            case '=':
-//                String s = "" + ch;
-//
-//                ch = (char) br.read();
-//                if (ch == '=') {
-//                    s = s + ch;
-//                    printTuple(Category.OPERATOR, s, rowNum, colNum);
-//                    ch = (char) br.read();
-//                    colNum += 2;
-//                } else {
-//                    printTuple(Category.OPERATOR, s, rowNum, colNum);
-//                    colNum++;
-//                }
-//
-//                break;
             case '>':
                 handleGreater();
                 break;
             case '<':
                 handleLess();
                 break;
-//            case '%':
-//                ch = (char) br.read();
-//
-//                if (ch == '=') {
-//                    printTuple(Category.OPERATOR, "%=", rowNum, colNum);
-//                    ch = (char) br.read();
-//                    colNum += 2;
-//                } else {
-//                    printTuple(Category.OPERATOR, "%", rowNum, colNum);
-//                    colNum++;
-//                }
-//                break;
+            case '&':
+                ch = (char) br.read();
+                if (ch == '&') {
+                    token = new Token("LOGIC_OP", "&&", rowNum, colNum);
+                    token.print();
+                    tokens.add(token);
+                    ch = (char) br.read();
+                    colNum += 2;
+                } else {
+                    printError(rowNum, colNum, "无法识别的符号");
+                    colNum++;
+                }
+                break;
+            case '|':
+                ch = (char) br.read();
+                if (ch == '|') {
+                    token = new Token("LOGIC_OP", "||", rowNum, colNum);
+                    token.print();
+                    tokens.add(token);
+                    ch = (char) br.read();
+                    colNum += 2;
+                } else {
+                    printError(rowNum, colNum, "无法识别的符号");
+                    colNum++;
+                }
+                break;
             default:
                 //todo 错误处理
                 printError(rowNum, colNum, "无法识别的符号");
@@ -329,7 +297,6 @@ public class Lexer {
         int i = 0;
 
         StringBuilder sb = new StringBuilder();
-        sb.append('\'');
 
         ch = (char) br.read();
         i++;
@@ -348,7 +315,6 @@ public class Lexer {
         }
 
         if (ch == '\'') {
-            sb.append('\'');
             ch = (char) br.read();
             i++;
 //            printTuple(Category.CONSTANT, sb.toString(), rowNum, colNum);
@@ -366,7 +332,6 @@ public class Lexer {
     private void handleString() throws IOException {
         int i = 0;
         StringBuilder sb = new StringBuilder();
-        sb.append('\"');
 
         ch = (char) br.read();
         i++;
@@ -385,7 +350,6 @@ public class Lexer {
         }
 
         if (ch == '\"') {
-            sb.append('\"');
             ch = (char) br.read();
             i++;
 //            printTuple(Category.CONSTANT, sb.toString(), rowNum, colNum);
