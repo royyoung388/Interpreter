@@ -2,30 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4653058a-14ce-4163-aeb8-9b46ff11ef2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/javacc/CMM.jj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/Symbol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/SymbolTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/Type.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/Value.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/javacc/s.jj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/semantic/Type.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production.txt" beforeDir="false" afterPath="$PROJECT_DIR$/production.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lexer/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/AnalyseProduction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/AnalyseProduction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/parser/AnalyseTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser/AnalyseTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Expression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/Semantic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Semantic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testAnalyse.c" beforeDir="false" afterPath="$PROJECT_DIR$/testAnalyse.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/解释器.docx" beforeDir="false" afterPath="$PROJECT_DIR$/解释器.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/解释器构造实验+CMM.docx" beforeDir="false" afterPath="$PROJECT_DIR$/解释器构造实验+CMM.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMMParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMMParserConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMMParserTokenManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ParseException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleCharStream.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Token.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TokenMgrError.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +29,32 @@
     </SUITE>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/javacc/CMMParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="47" selection-start-column="47" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="506">
+                <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -127,7 +137,6 @@
         <option value="$PROJECT_DIR$/testAnalyse.txt" />
         <option value="$PROJECT_DIR$/tesstProduction.txt" />
         <option value="$PROJECT_DIR$/src/parser/AnalyticalTable.java" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/semantic/CateGory.java" />
         <option value="$PROJECT_DIR$/src/semantic/Seantic.java" />
         <option value="$PROJECT_DIR$/src/semantic/SymbolTableItem.java" />
@@ -171,6 +180,7 @@
         <option value="$PROJECT_DIR$/src/semantic/Semantic.java" />
         <option value="$PROJECT_DIR$/testAnalyse.c" />
         <option value="$PROJECT_DIR$/src/javacc/CMM.jj" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -194,7 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -216,6 +225,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -259,7 +269,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547071534986" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547219873421" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Compiler_Experiment-master/semantic" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -421,12 +431,12 @@
     </configuration>
     <list>
       <item itemvalue="Application.AnalyseProduction" />
-      <item itemvalue="Application.AnalyseTable" />
       <item itemvalue="Application.CMMParser" />
-      <item itemvalue="Application.Lexer" />
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Semantic" />
+      <item itemvalue="Application.AnalyseTable" />
+      <item itemvalue="Application.Lexer" />
       <item itemvalue="Application.Utils" />
+      <item itemvalue="Application.Semantic" />
     </list>
     <recent_temporary>
       <list>
@@ -461,19 +471,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1864" height="1098" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24636872" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24972068" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.49888268" weight="0.6081371" />
+      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.49888268" weight="0.28586724" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.5005587" side_tool="true" weight="0.3522484" />
       <window_info anchor="bottom" id="Version Control" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="3" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.3279743" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32762313" />
       <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49944136" weight="0.3929336" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.35331905" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
@@ -547,21 +558,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="644">
           <caret line="211" column="6" selection-start-line="211" selection-start-column="6" selection-end-line="211" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="23">
-            <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -908,16 +904,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/javacc/CMMParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testAnalyse.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -929,6 +915,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="852">
           <caret line="173" column="44" selection-start-line="173" selection-start-column="30" selection-end-line="173" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/javacc/CMMParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="47" selection-start-column="47" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="506">
+            <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state>
+          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
         </state>
       </provider>
     </entry>
